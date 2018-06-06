@@ -160,9 +160,13 @@ Lawnchair.adapter('dom', (function() {
             ,   k
             for (var i = 0, l = idx.length; i < l; i++) {
                 k     = idx[i] //v
-                o     = JSON.parse(storage.getItem(k))
-                o.key = k.replace(this.name + '.', '')
-                r.push(o)
+                try {
+                    o     = JSON.parse(storage.getItem(k))
+                    o.key = k.replace(this.name + '.', '')
+                    r.push(o)
+                } catch(e) {
+                    console.error("Could not parse: " + storage.getItem(k))
+                }
             }
             if (callback) this.fn(this.name, callback).call(this, r)
             return this
